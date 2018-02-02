@@ -1,10 +1,32 @@
-var schemeNames = {sequential: ["BuGn","BuPu","GnBu","OrRd","PuBu","PuBuGn","PuRd","RdPu","YlGn","YlGnBu","YlOrBr","YlOrRd"],
-					singlehue:["Blues","Greens","Greys","Oranges","Purples","Reds"],
-					diverging: ["BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"],
-					qualitative: ["Accent","Dark2","Paired","Pastel1","Pastel2","Set1","Set2","Set3"] };
+// var schemeNames = { sequential: ["BuGn","CaGold","CaTeal","BuPu","GnBu","OrRd","PuBu","PuBuGn","PuRd","RdPu","YlGn","YlGnBu","YlOrBr","YlOrRd"],
+// 					singlehue:["Blues","CaGold","CaTeal","Greens","Greys","Oranges","Purples","Reds"],
+// 					diverging: ["BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"],
+// 					qualitative: ["Accent","Dark2","Paired","Pastel1","Pastel2","Set1","Set2","Set3"] };
+
+var schemeNames = { 
+	sequential:
+		["California_gold",
+		"California_teal",
+		"FireAndIce_red",
+		"FireAndIce_gray",
+		"VanGogh_yellow",
+		"VanGogh_blue",
+		"GrapevineSunrise_green",
+		"GrapevineSunrise_purple"],
+	singlehue:
+		["California_gold",
+		"California_teal",
+		"FireAndIce_red",
+		"FireAndIce_gray",
+		"VanGogh_yellow",
+		"VanGogh_blue",
+		"GrapevineSunrise_green",
+		"GrapevineSunrise_purple"],
+};
+
 
 var visibleMap,
-	selectedScheme = "BuGn",
+	selectedScheme = "CaGold",
 	numClasses = 3;
 
 $("#num-classes").change(function(){
