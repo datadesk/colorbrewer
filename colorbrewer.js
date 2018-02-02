@@ -4,8 +4,7 @@
 // 					qualitative: ["Accent","Dark2","Paired","Pastel1","Pastel2","Set1","Set2","Set3"] };
 
 var schemeNames = { 
-	sequential:
-		["California_gold",
+	sequential: ["California_gold",
 		"California_teal",
 		"FireAndIce_red",
 		"FireAndIce_gray",
@@ -22,11 +21,13 @@ var schemeNames = {
 		"VanGogh_blue",
 		"GrapevineSunrise_green",
 		"GrapevineSunrise_purple"],
+	diverging:
+		["California","BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
 };
 
 
 var visibleMap,
-	selectedScheme = "CaGold",
+	selectedScheme = "California_gold",
 	numClasses = 3;
 
 $("#num-classes").change(function(){
@@ -119,20 +120,20 @@ function setSchemeType(type)
 	switch( selectedSchemeType )
 	{
 		case "sequential":
-			if( $( "#num-classes" ).val() >= 10 )
+			if( $( "#num-classes" ).val() >= 7 )
 			{
-				$( "#num-classes" ).val( 9 );
-				numClasses = 9;
+				$( "#num-classes" ).val( 7 );
+				numClasses = 7;
 			}
-			$( "#num-classes option[name=10], #num-classes option[name=11], #num-classes option[name=12]" ).attr( "disabled", "disabled" );
+			$( "#num-classes option[name=8],#num-classes option[name=9],#num-classes option[name=10], #num-classes option[name=11], #num-classes option[name=12], #num-classes option[name=13], #num-classes option[name=14]" ).attr( "disabled", "disabled" );
 			break;
 		case "diverging":
-			if( $( "#num-classes" ).val() >= 12 )
+			if( $( "#num-classes" ).val() >= 14 )
 			{
-				$( "#num-classes" ).val( 11 );
-				numClasses = 11;
+				$( "#num-classes" ).val( 14 );
+				numClasses = 14;
 			}
-			$( "#num-classes option[name=12]" ).attr( "disabled", "disabled" );
+			$( "#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
 			break;
 	}
 	showSchemes();
@@ -378,7 +379,7 @@ $("#counties").svg({
 function init()
 {
 	var type = getParameterByName("type") || "sequential";
-	var scheme = getParameterByName("scheme") || "BuGn";
+	var scheme = getParameterByName("scheme") || "California_gold";
 	var n = getParameterByName("n") || 3;
 	$("#"+type).prop("checked",true);
 	$("#num-classes").val(n);
