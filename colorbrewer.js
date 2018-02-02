@@ -347,7 +347,7 @@ $("#counties").svg({
 			$("#probe").show();
 		});
 		$("#counties path").mousemove(function(e){
-			$("#probe").css({left: Math.min(920,e.pageX - $("#wrapper").offset().left + 10), top: e.pageY - $("#wrapper").offset().top - 75 });
+			$("#probe").css({left: Math.min(920,e.pageX - $("#container").offset().left + 10), top: e.pageY - $("#container").offset().top - 75 });
 		});
 		$("#counties path").mouseout(function(){$("#probe").hide();highlight.remove();});
 	}
@@ -454,7 +454,7 @@ $(".learn-more, #how, #credits, #downloads").click(function(e){
 	}
 	if ( page ){
 		$("#learnmore #content").load("learnmore/"+page,function(){
-			$("#learnmore").show().css("margin-top",($("#wrapper").height()/2-$("#learnmore").height()/2));
+			$("#learnmore").show().css("margin-top",($("#container").height()/2-$("#learnmore").height()/2));
 		});
 		$("#mask").show();
 	}
