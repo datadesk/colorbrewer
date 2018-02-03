@@ -22,7 +22,7 @@ var schemeNames = {
 		"GrapevineSunrise_green",
 		"GrapevineSunrise_purple"],
 	diverging:
-		["California","BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
+		["BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
 };
 
 
@@ -120,7 +120,7 @@ function setSchemeType(type)
 	switch( selectedSchemeType )
 	{
 		case "sequential":
-			if( $( "#num-classes" ).val() >= 7 )
+			if( $( "#num-classes" ).val() >= 8 )
 			{
 				$( "#num-classes" ).val( 7 );
 				numClasses = 7;
@@ -131,7 +131,7 @@ function setSchemeType(type)
 			if( $( "#num-classes" ).val() >= 14 )
 			{
 				$( "#num-classes" ).val( 14 );
-				numClasses = 14;
+				numClasses = 7;
 			}
 			$( "#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
 			break;
@@ -146,7 +146,7 @@ function showSchemes()
 		if ( checkFilters(schemeNames[selectedSchemeType][i]) == false ) continue;
 		var ramp = $("<div class='ramp "+schemeNames[selectedSchemeType][i]+"'></div>"),
 			svg = "<svg width='15' height='75'>";
-		for ( var n = 0; n < 5; n++ ){
+		for ( var n = 0; n < 15; n++ ){
 			svg += "<rect fill="+colorbrewer[schemeNames[selectedSchemeType][i]][5][n]+" width='15' height='15' y='"+n*15+"'/>";
 		}
 		svg += "</svg>";
@@ -156,9 +156,9 @@ function showSchemes()
 		}));
 	}
 	if ( selectedSchemeType == "sequential" ){
-		$("#scheme1").css("width","160px");
-		$("#multi").show().text("Multi-hue:");
-		$("#scheme2").css("width","90px");
+		$("#scheme1").css("width","100%");
+		//$("#multi").show().text("Multi-hue:");
+		//$("#scheme2").css("width","90px");
 		$("#single").show().text("Single hue:");
 
 		$("#singlehue").empty().css("display","inline-block");
@@ -177,7 +177,7 @@ function showSchemes()
 		}
 	} else {
 		$("#scheme1").css("width","100%");
-		$("#multi").hide();
+		//$("#multi").hide();
 		$("#singlehue").empty();
 		$("#single").hide();
 	}
