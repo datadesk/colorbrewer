@@ -11,7 +11,24 @@ var schemeNames = {
 		"VanGogh_yellow",
 		"VanGogh_blue",
 		"GrapevineSunrise_green",
-		"GrapevineSunrise_purple"],
+		"GrapevineSunrise_purple",
+		"VanGoghPA_amber",
+		"VanGoghPA_purple",
+		"PeanutButterJelly_peanut",
+		"PeanutButterJelly_jelly",
+		"SapphireGold_gold",
+		"SapphireGold_sapphire",
+		"GoldenGreenBlue_green",
+		"GoldenGreenBlue_blue",
+		"CaliforniaSunset_bronze",
+		"CaliforniaSunset_teal",
+		"HeatContrast_warm",
+		"HeatContrast_cool",
+		"BrightHeatContrast_warm",
+		"BrightHeatContrast_cool",
+		"FallFestival_orange",
+		"FallFestival_green"
+		],
 	singlehue:
 		["California_gold",
 		"California_teal",
@@ -20,10 +37,29 @@ var schemeNames = {
 		"VanGogh_yellow",
 		"VanGogh_blue",
 		"GrapevineSunrise_green",
-		"GrapevineSunrise_purple"],
-	diverging:
-		["BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
+		"GrapevineSunrise_purple",
+		"VanGoghPA_amber",
+		"VanGoghPA_purple",
+		"PeanutButterJelly_peanut",
+		"PeanutButterJelly_jelly",
+		"SapphireGold_gold",
+		"SapphireGold_sapphire",
+		"GoldenGreenBlue_green",
+		"GoldenGreenBlue_blue",
+		"CaliforniaSunset_bronze",
+		"CaliforniaSunset_teal",
+		"HeatContrast_warm",
+		"HeatContrast_cool",
+		"BrightHeatContrast_warm",
+		"BrightHeatContrast_cool",
+		"FallFestival_orange",
+		"FallFestival_green"
+		],
+	diverging: ["California"]
+		//["California","BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
+
 };
+
 
 
 var visibleMap,
@@ -120,7 +156,7 @@ function setSchemeType(type)
 	switch( selectedSchemeType )
 	{
 		case "sequential":
-			if( $( "#num-classes" ).val() >= 8 )
+			if( $( "#num-classes" ).val() >= 7 )
 			{
 				$( "#num-classes" ).val( 7 );
 				numClasses = 7;
@@ -128,12 +164,12 @@ function setSchemeType(type)
 			$( "#num-classes option[name=8],#num-classes option[name=9],#num-classes option[name=10], #num-classes option[name=11], #num-classes option[name=12], #num-classes option[name=13], #num-classes option[name=14]" ).attr( "disabled", "disabled" );
 			break;
 		case "diverging":
-			if( $( "#num-classes" ).val() >= 14 )
+			if( $( "#num-classes" ).val() >= 15 )
 			{
 				$( "#num-classes" ).val( 14 );
-				numClasses = 7;
+				numClasses = 14;
 			}
-			$( "#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
+			$( "#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
 			break;
 	}
 	showSchemes();
@@ -145,20 +181,21 @@ function showSchemes()
 	for ( var i in schemeNames[selectedSchemeType]){
 		if ( checkFilters(schemeNames[selectedSchemeType][i]) == false ) continue;
 		var ramp = $("<div class='ramp "+schemeNames[selectedSchemeType][i]+"'></div>"),
-			svg = "<svg width='15' height='75'>";
-		for ( var n = 0; n < 15; n++ ){
-			svg += "<rect fill="+colorbrewer[schemeNames[selectedSchemeType][i]][5][n]+" width='15' height='15' y='"+n*15+"'/>";
+			svg = "<svg width='15' height='90'>";
+		//is this setting the number of sample squares to append? changing 5 to 4
+		for ( var n = 0; n < 6; n++ ){
+			svg += "<rect fill="+colorbrewer[schemeNames[selectedSchemeType][i]][6][n]+" width='15' height='15' y='"+n*15+"'/>";
 		}
 		svg += "</svg>";
 		$("#ramps").append(ramp.append(svg).click( function(){
 			if ( $(this).hasClass("selected") ) return;
-			setScheme( $(this).attr("class").substr(5) );
+			setScheme( $(this).attr("class").substr(6) );
 		}));
 	}
 	if ( selectedSchemeType == "sequential" ){
-		$("#scheme1").css("width","100%");
-		//$("#multi").show().text("Multi-hue:");
-		//$("#scheme2").css("width","90px");
+		$("#scheme1").css("width","160px");
+		$("#multi").show().text("Multi-hue:");
+		$("#scheme2").css("width","90px");
 		$("#single").show().text("Single hue:");
 
 		$("#singlehue").empty().css("display","inline-block");
@@ -177,7 +214,7 @@ function showSchemes()
 		}
 	} else {
 		$("#scheme1").css("width","100%");
-		//$("#multi").hide();
+		$("#multi").hide();
 		$("#singlehue").empty();
 		$("#single").hide();
 	}
@@ -248,7 +285,6 @@ function setScheme(s)
 		if ( i < numClasses - 1 ) jsonString += ",";
 	}
 	jsonString += "]";
-
 	return jsonString;
 } */
 
@@ -363,7 +399,7 @@ $("#counties").svg({
 			$("#probe").empty().append(
 				"<p>"+selectedScheme+" class " + cl +"<br/>"+
 				"RGB: " + getColorDisplay(c,"rgb")+"<br/>"+
-				"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
+				//"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
 				"HEX: " + getColorDisplay(c,"hex")+"</p>"
 			);
 			highlight = $(this).clone().css({"pointer-events":"none","stroke":"#000","stroke-width":"2"}).appendTo("#county-map g");
