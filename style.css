@@ -125,6 +125,7 @@ a img{ border: none }
 p {
 	font-family: 'Benton Gothic Bold', Arial, sans-serif;
 	font-weight: normal;
+	margin: 8px 0;
 }
 option, label {
 	font-family: 'Benton Gothic Regular', Arial, sans-serif;
@@ -326,7 +327,7 @@ option, label {
 
 #color-values, #color-chips {
 	float: left;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	max-height: 100px;
 }
 #color-values, #color-chips{
@@ -334,14 +335,14 @@ option, label {
 }
 
 #system{
-/*	position: absolute;
+	/*position: absolute;
 	top: 295px;
-	left: 145px;
+	left: 145px;*/
 	width: 122px;
 	height: 357px;
-	padding-left: 5px;
-	float: right;
-	border-top: 1px solid #999*/
+	/*padding-left: 5px;
+	float: right;*/
+	border-top: 1px solid #999;
 }
 
 #scheme-name {
@@ -354,7 +355,7 @@ option, label {
 	height: 357px;
 	width: 142px;
 	padding-left: 2px;*/
-	border-top: 1px solid #999;
+	/*border-top: 1px solid #999;*/
 	/*border-right: 1px solid #999;*/
 }
 
@@ -666,4 +667,4 @@ a:hover{ text-decoration: underline; }
 #terrain-img{ position: absolute; }
 #road-lines{ fill: none; stroke: #f33; stroke-width: 1.5px; }
 #county-map{ fill: #999; }
-#county-map g{ stroke: #000; stroke-width: .50px; }
+#county-map g { stroke: #000; stroke-width: .50px; }

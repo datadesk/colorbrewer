@@ -55,9 +55,20 @@ var schemeNames = {
 		"FallFestival_orange",
 		"FallFestival_green"
 		],
-	diverging: ["California"]
-		//["California","BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"]
-
+	diverging: 
+		["California",
+		"FireAndIce",
+		"VanGoghYB",
+		"GrapevineSunrise",
+		"VanGoghPA",
+		"PeanutButterJelly",
+		"SapphireGold",
+		"GoldenGreenBlue",
+		"CaliforniaSunset",
+		"HeatContrast",
+		"BrightHeatContrast",
+		"FallFestival"
+		]
 };
 
 
@@ -73,7 +84,7 @@ $(".scheme-type").change(function(){
 	setSchemeType($(this).attr("id"));
 });
 $("#color-system").change(updateValues);
-$("#layers input").change(layerChange);
+// $("#layers input").change(layerChange);
 $("#filters input").change(showSchemes);
 
 $("#transparency-slider").mousedown(function(){
@@ -109,7 +120,7 @@ $("#city-color").spectrum({
 	}
 });
 $("#border-color").spectrum({
-	color: "#000",
+	color: "#777",
 	showInput:true,
 	change: function(color){
 		$("#county-map g").css("stroke",color.toHexString());
@@ -169,7 +180,7 @@ function setSchemeType(type)
 				$( "#num-classes" ).val( 14 );
 				numClasses = 14;
 			}
-			$( "#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
+			$("#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
 			break;
 	}
 	showSchemes();
@@ -320,7 +331,7 @@ function applyColors()
 		return;
 	}
 	for ( var i = 0; i < numClasses; i++ ){
-		if ( !$("#borderscheck").is(":checked") ) $("#county-map g .q"+i+"-"+numClasses).css("stroke",colorbrewer[selectedScheme][numClasses][i]);
+		//if ( !$("#borderscheck").is(":checked") ) $("#county-map g .q"+i+"-"+numClasses).css("stroke",colorbrewer[selectedScheme][numClasses][i]);
 		$(".q"+i+"-"+numClasses).css("fill",colorbrewer[selectedScheme][numClasses][i]);
 	}
 }
@@ -409,6 +420,7 @@ $("#counties").svg({
 			$("#probe").css({left: Math.min(920,e.pageX - $("#container").offset().left + 10), top: e.pageY - $("#container").offset().top - 75 });
 		});
 		$("#counties path").mouseout(function(){$("#probe").hide();highlight.remove();});
+		$("#county-map g").children().css({"stroke":"inherit","stroke-width":"0.50"});
 	}
 });
 
@@ -416,7 +428,7 @@ function init()
 {
 	var type = getParameterByName("type") || "sequential";
 	var scheme = getParameterByName("scheme") || "California_gold";
-	var n = getParameterByName("n") || 3;
+	var n = getParameterByName("n") || 4;
 	$("#"+type).prop("checked",true);
 	$("#num-classes").val(n);
 	setSchemeType(type);
@@ -424,40 +436,41 @@ function init()
 	setScheme(scheme);
 }
 
-function layerChange()
-{
-	switch( $(this).attr("id") ){
-		case "roadscheck":
-		if ( $(this).is(":checked") ){
-			if ( !$("#overlays").children().length )
-				loadOverlays("roads");
-			else
-				$("#roads").show();
-		} else {
-			$("#roads").hide();
-		}
-		break;
+// function layerChange()
+// {
+// 	switch( $(this).attr("id") ){
+// 		case "roadscheck":
+// 		if ( $(this).is(":checked") ){
+// 			if ( !$("#overlays").children().length )
+// 				loadOverlays("roads");
+// 			else
+// 				$("#roads").show();
+// 		} else {
+// 			$("#roads").hide();
+// 		}
+// 		break;
 
-		case "citiescheck":
-		if ( $(this).is(":checked") ){
-			if ( !$("#overlays").children().length )
-				loadOverlays("cities");
-			else
-				$("#cities").show();
-		} else {
-			$("#cities").hide();
-		}
-		break;
+// 		case "citiescheck":
+// 		if ( $(this).is(":checked") ){
+// 			if ( !$("#overlays").children().length )
+// 				loadOverlays("cities");
+// 			else
+// 				$("#cities").show();
+// 		} else {
+// 			$("#cities").hide();
+// 		}
+// 		break;
 
-		case "borderscheck":
-		if ($(this).is(":checked")) $("#county-map g").children().css({"stroke":"inherit","stroke-width":"0.50"});
-		else {
-			var i=numClasses; while(i--){
-				$("#county-map g .q"+i+"-"+numClasses).css({"stroke":colorbrewer[selectedScheme][numClasses][i],"stroke-width":"1"});
-			}
-		}
-	}
-}
+// 		case "borderscheck":
+// 		if ($(this).is(":checked")) $("#county-map g").children().css({"stroke":"inherit","stroke-width":"0.50"});
+// 		else {
+// 			var i=numClasses; while(i--){
+// 				$("#county-map g .q"+i+"-"+numClasses).css({"stroke":colorbrewer[selectedScheme][numClasses][i],"stroke-width":"1"});
+// 			}
+// 		}
+// 	}
+// }
+
 
 function loadOverlays(o)
 {
