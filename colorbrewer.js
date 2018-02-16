@@ -1,8 +1,3 @@
-// var schemeNames = { sequential: ["BuGn","CaGold","CaTeal","BuPu","GnBu","OrRd","PuBu","PuBuGn","PuRd","RdPu","YlGn","YlGnBu","YlOrBr","YlOrRd"],
-// 					singlehue:["Blues","CaGold","CaTeal","Greens","Greys","Oranges","Purples","Reds"],
-// 					diverging: ["BrBG","PiYG","PRGn","PuOr","RdBu","RdGy","RdYlBu","RdYlGn","Spectral"],
-// 					qualitative: ["Accent","Dark2","Paired","Pastel1","Pastel2","Set1","Set2","Set3"] };
-
 var schemeNames = { 
 	sequential: ["California_gold",
 		"California_teal",
@@ -75,7 +70,7 @@ var schemeNames = {
 
 var visibleMap,
 	selectedScheme = "California_gold",
-	numClasses = 3;
+	numClasses = 4;
 
 $("#num-classes").change(function(){
 	setNumClasses($(this).val());
@@ -193,14 +188,13 @@ function showSchemes()
 		if ( checkFilters(schemeNames[selectedSchemeType][i]) == false ) continue;
 		var ramp = $("<div class='ramp "+schemeNames[selectedSchemeType][i]+"'></div>"),
 			svg = "<svg width='15' height='90'>";
-		//is this setting the number of sample squares to append? changing 5 to 4
 		for ( var n = 0; n < 6; n++ ){
 			svg += "<rect fill="+colorbrewer[schemeNames[selectedSchemeType][i]][6][n]+" width='15' height='15' y='"+n*15+"'/>";
 		}
 		svg += "</svg>";
 		$("#ramps").append(ramp.append(svg).click( function(){
 			if ( $(this).hasClass("selected") ) return;
-			setScheme( $(this).attr("class").substr(6) );
+			setScheme( $(this).attr("class").substr(5) );
 		}));
 	}
 	if ( selectedSchemeType == "sequential" ){
@@ -288,7 +282,7 @@ function setScheme(s)
 	}
 }
 
-/* function getJSON()
+ function getJSON()
 {
 	var jsonString = "[";
 	for ( var i = 0; i < numClasses; i ++ ){
@@ -297,7 +291,7 @@ function setScheme(s)
 	}
 	jsonString += "]";
 	return jsonString;
-} */
+} 
 
 function checkFilters(scheme,f)
 {
@@ -326,6 +320,7 @@ function checkScreen(scheme)
 
 function applyColors()
 {
+
 	if ( !colorbrewer[selectedScheme][numClasses] ){
 		$("#counties g path").css("fill","#ccc");
 		return;
@@ -420,7 +415,7 @@ $("#counties").svg({
 			$("#probe").css({left: Math.min(920,e.pageX - $("#container").offset().left + 10), top: e.pageY - $("#container").offset().top - 75 });
 		});
 		$("#counties path").mouseout(function(){$("#probe").hide();highlight.remove();});
-		$("#county-map g").children().css({"stroke":"inherit","stroke-width":"0.50"});
+		$("#county-map g").children().css({"stroke":"inherit","stroke-width":"0.50","stroke-opacity":"0.7"});
 	}
 });
 
