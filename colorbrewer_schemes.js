@@ -1,11 +1,3 @@
-
-/*
- * This product includes color specifications and designs developed by Cynthia
- * Brewer (http://colorbrewer.org/).
- 
- https://groups.google.com/forum/?fromgroups=#!topic/d3-js/iyXFgJR1JY0
- */
-
 var colorbrewer = { 
 /*** California set ***/
 California_gold: {1: ['#e1b930'], 2: ['#c8a02d', '#e9cb6f'], 3: ['#c8a02d', '#e9cb6f', '#f7f1cc'], 4: ['#aa822d', '#c8a02d', '#e9cb6f', '#f0dfa3'], 5: ['#8c6928', '#aa822d', '#c8a02d', '#e9cb6f', '#f0dfa3'], 6:	['#8c6928', '#aa822d', '#c8a02d', '#e9cb6f', '#eedea3', '#f7f1cc'], 7: ['#8c6928', '#aa822d', '#c8a02d', '#e1b930', '#e8cc71', '#f0dfa3', '#f7f1cc'],'properties':{'type': 'seq','blind':[1],'print':[1,1,0,0,0,0,0],'copy':[1,1,2,0,0,0,0],'screen':[1,1,1,0,0,0,0] } } ,

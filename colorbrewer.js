@@ -253,7 +253,7 @@ function setScheme(s)
 	$("#scheme-name").html(numClasses+"-class "+selectedScheme);
 	applyColors();
 	drawColorChips();
-	$("#permalink").val("http://colorbrewer2.org/?type="+selectedSchemeType+"&scheme="+selectedScheme+"&n="+numClasses);
+	$("#permalink").val("/?type="+selectedSchemeType+"&scheme="+selectedScheme+"&n="+numClasses);
 	window.location.hash = "type="+selectedSchemeType+"&scheme="+selectedScheme+"&n="+numClasses;
 
 	updateValues();
@@ -265,15 +265,15 @@ function setScheme(s)
 	}
 	$("#copy-css input").val(cssString);
 
-	$(".score-icon").attr("class","score-icon");
-	var f = checkColorblind(s);
-	$("#blind-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"color blind friendly");
-	f = checkCopy(s);
-	$("#copy-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"photocopy friendly");
-	f = checkScreen(s);
-	$("#screen-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"LCD friendly");
-	f = checkPrint(s);
-	$("#print-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"print friendly");
+	// $(".score-icon").attr("class","score-icon");
+	// var f = checkColorblind(s);
+	// $("#blind-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"color blind friendly");
+	// f = checkCopy(s);
+	// $("#copy-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"photocopy friendly");
+	// f = checkScreen(s);
+	// $("#screen-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"LCD friendly");
+	// f = checkPrint(s);
+	// $("#print-icon").addClass( !f ? "bad" : (f == 1 ? "ok" : "maybe") ).attr("title",numClasses+"-class "+selectedScheme + " is " + getWord(f)+"print friendly");
 
 	function getWord(w){
 		if ( !w ) return "not ";
@@ -296,28 +296,27 @@ function setScheme(s)
 function checkFilters(scheme,f)
 {
 	if ( !colorbrewer[scheme][numClasses] ) return false;
-	if ( $("#blindcheck").is(":checked") && checkColorblind(scheme) != 1 ) return false;
-	if ( $("#printcheck").is(":checked") && checkPrint(scheme) != 1 ) return false;
-	if ( $("#copycheck").is(":checked") && checkCopy(scheme) != 1) return false;
+	//if ( $("#blindcheck").is(":checked") && checkColorblind(scheme) != 1 ) return false;
+	//if ( $("#printcheck").is(":checked") && checkPrint(scheme) != 1 ) return false;
+	//if ( $("#copycheck").is(":checked") && checkCopy(scheme) != 1) return false;
 	return true;
 }
-function checkColorblind(scheme)
-{
-	return colorbrewer[scheme].properties.blind.length > 1 ? colorbrewer[scheme].properties.blind[numClasses-3] : colorbrewer[scheme].properties.blind[0];
-}
-function checkPrint(scheme)
-{
-	return colorbrewer[scheme].properties.print.length > 1 ? colorbrewer[scheme].properties.print[numClasses-3] : colorbrewer[scheme].properties.print[0];
-}
-function checkCopy(scheme)
-{
-	return colorbrewer[scheme].properties.copy.length > 1 ? colorbrewer[scheme].properties.copy[numClasses-3] : colorbrewer[scheme].properties.copy[0];
-}
-function checkScreen(scheme)
-{
-	return colorbrewer[scheme].properties.screen.length > 1 ? colorbrewer[scheme].properties.screen[numClasses-3] : colorbrewer[scheme].properties.screen[0];
-}
-
+// function checkColorblind(scheme)
+// {
+// 	return colorbrewer[scheme].properties.blind.length > 1 ? colorbrewer[scheme].properties.blind[numClasses-3] : colorbrewer[scheme].properties.blind[0];
+// }
+// function checkPrint(scheme)
+// {
+// 	return colorbrewer[scheme].properties.print.length > 1 ? colorbrewer[scheme].properties.print[numClasses-3] : colorbrewer[scheme].properties.print[0];
+// }
+// function checkCopy(scheme)
+// {
+// 	return colorbrewer[scheme].properties.copy.length > 1 ? colorbrewer[scheme].properties.copy[numClasses-3] : colorbrewer[scheme].properties.copy[0];
+// }
+// function checkScreen(scheme)
+// {
+// 	return colorbrewer[scheme].properties.screen.length > 1 ? colorbrewer[scheme].properties.screen[numClasses-3] : colorbrewer[scheme].properties.screen[0];
+// }
 function applyColors()
 {
 
@@ -405,7 +404,7 @@ $("#counties").svg({
 			$("#probe").empty().append(
 				"<p>"+selectedScheme+" class " + cl +"<br/>"+
 				"RGB: " + getColorDisplay(c,"rgb")+"<br/>"+
-				//"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
+				"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
 				"HEX: " + getColorDisplay(c,"hex")+"</p>"
 			);
 			highlight = $(this).clone().css({"pointer-events":"none","stroke":"#000","stroke-width":"2"}).appendTo("#county-map g");
@@ -480,56 +479,56 @@ function loadOverlays(o)
 		}
 	});
 }
-$(".learn-more, #how, #credits, #downloads").click(function(e){
-	e.stopPropagation();
-	var page;
-	switch( $(this).attr("id") ){
-		case "number-learn-more":
-		$("#learnmore-title").html("NUMBER OF DATA CLASSES");
-		page = "number.html";
-		break;
+// $(".learn-more, #how, #credits, #downloads").click(function(e){
+// 	e.stopPropagation();
+// 	var page;
+// 	switch( $(this).attr("id") ){
+// 		case "number-learn-more":
+// 		$("#learnmore-title").html("NUMBER OF DATA CLASSES");
+// 		page = "number.html";
+// 		break;
 
-		case "schemes-learn-more":
-		$("#learnmore-title").html("TYPES OF COLOR SCHEMES");
-		page = "schemes.html";
-		break;
+// 		case "schemes-learn-more":
+// 		$("#learnmore-title").html("TYPES OF COLOR SCHEMES");
+// 		page = "schemes.html";
+// 		break;
 
-		case "filters-learn-more":
-		$("#learnmore-title").html("USABILITY ICONS");
-		page = "usability.html";
-		break;
+// 		case "filters-learn-more":
+// 		$("#learnmore-title").html("USABILITY ICONS");
+// 		page = "usability.html";
+// 		break;
 
-		case "how":
-		$("#learnmore-title").html("HOW TO USE: MAP DIAGNOSTICS");
-		page = "howtouse.html";
-		break;
+// 		case "how":
+// 		$("#learnmore-title").html("HOW TO USE: MAP DIAGNOSTICS");
+// 		page = "howtouse.html";
+// 		break;
 
-		case "credits":
-		$("#learnmore-title").html("CREDITS");
-		page = "credits.html";
-		break;
+// 		case "credits":
+// 		$("#learnmore-title").html("CREDITS");
+// 		page = "credits.html";
+// 		break;
 
-		case "downloads":
-		$("#learnmore-title").html("DOWNLOADS");
-		page = "downloads.html";
-		break;
+// 		case "downloads":
+// 		$("#learnmore-title").html("DOWNLOADS");
+// 		page = "downloads.html";
+// 		break;
 
-		case "context-learn-more":
-		$("#learnmore-title").html("MAP CONTEXT and BACKGROUND");
-		page = "context.html";
-		break;
-	}
-	if ( page ){
-		$("#learnmore #content").load("learnmore/"+page,function(){
-			$("#learnmore").show().css("margin-top",($("#container").height()/2-$("#learnmore").height()/2));
-		});
-		$("#mask").show();
-	}
-});
-$("#learnmore #close, #mask").click(function(){
-	$("#learnmore #content").empty();
-	$("#learnmore, #mask").hide();
-});
+// 		case "context-learn-more":
+// 		$("#learnmore-title").html("MAP CONTEXT and BACKGROUND");
+// 		page = "context.html";
+// 		break;
+// 	}
+// 	if ( page ){
+// 		$("#learnmore #content").load("learnmore/"+page,function(){
+// 			$("#learnmore").show().css("margin-top",($("#container").height()/2-$("#learnmore").height()/2));
+// 		});
+// 		$("#mask").show();
+// 	}
+// });
+// $("#learnmore #close, #mask").click(function(){
+// 	$("#learnmore #content").empty();
+// 	$("#learnmore, #mask").hide();
+// });
 
 $( "#export #tab" ).toggle(
 	function(){
