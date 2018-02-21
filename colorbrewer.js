@@ -346,8 +346,24 @@ function updateValues()
 	var str = "";
 	var s = $("#color-system").val().toLowerCase();
 	var jsonString = "[";
+
+	function precise(x) {
+	  if ( x == 0 || x == 1 ){
+	  	return Number.parseFloat(x).toPrecision(1);
+	  } else {
+	  	return Number.parseFloat(x).toPrecision(3);
+	  }
+	}
+
+	var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+	var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+	var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+	var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+	var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+	var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
+
 	$("#color-chips rect").each(function(i){
-		var val = ( s == "cmyk" ? getCMYK(selectedScheme,numClasses,i) : getColorDisplay($(this).css("fill")) );
+		var val = ( s == "cmyk" ? cmyk : getColorDisplay($(this).css("fill")) );
 		str += val + "\n";
 
 		var jsonVal = getColorDisplay($(this).css("fill"));
@@ -367,8 +383,7 @@ function updateValues()
 	$("#copy-json input").val(jsonString);
 }
 
-function getColorDisplay(c,s)
-{
+function getColorDisplay(c,s){
 	if ( c.indexOf("#") != 0 ){
 		var arr = c.replace(/[a-z()\s]/g,"").split(",");
 		var rgb = {r:arr[0],g:arr[1],b:arr[2]};
@@ -384,9 +399,29 @@ function getColorDisplay(c,s)
 	}
 
 }
-function getCMYK( scheme, classes, n ){
-	return cmyk[scheme][classes][n].toString();
+//function getCMYK( scheme, classes, n ){
+	//return cmyk[scheme][classes][n].toString();
+//}
+
+function getCMYK( ){
+	
+	function precise(x) {
+	  if ( x == 0 || x == 1 ){
+	  	return Number.parseFloat(x).toPrecision(1);
+	  } else {
+	  	return Number.parseFloat(x).toPrecision(3);
+	  }
+	}
+
+	var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+	var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+	var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+	var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+	var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+	var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
+
 }
+
 var highlight;
 $("#counties").svg({
 	loadURL: "map/map.svg",
@@ -401,10 +436,31 @@ $("#counties").svg({
 			var c = $(this).css("fill");
 			var cl = $(this).attr("class").match(new RegExp("q[0-9]+-"+numClasses))[0];
 			cl = parseInt(cl.substring(cl.indexOf("q")+1,cl.indexOf("-"))) + 1;
+
+
+
+	
+			function precise(x) {
+			  if ( x == 0 || x == 1 ){
+			  	return Number.parseFloat(x).toPrecision(1);
+			  } else {
+			  	return Number.parseFloat(x).toPrecision(3);
+			  }
+			}
+
+			var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+			var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+			var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+			var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+			var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+
 			$("#probe").empty().append(
 				"<p>"+selectedScheme+" class " + cl +"<br/>"+
 				"RGB: " + getColorDisplay(c,"rgb")+"<br/>"+
-				"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
+				//"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
+				
+				"CMYK: [" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"] <br/>"+
+
 				"HEX: " + getColorDisplay(c,"hex")+"</p>"
 			);
 			highlight = $(this).clone().css({"pointer-events":"none","stroke":"#000","stroke-width":"2"}).appendTo("#county-map g");
@@ -466,19 +522,19 @@ function init()
 // }
 
 
-function loadOverlays(o)
-{
-	$("#overlays").svg({
-		loadURL: "map/overlays.svg",
-		onLoad: function(){
-			$("#overlays svg").attr("width",756).attr("height",581);
-			if ( o == "cities" ) $("#roads").hide();
-			else $("#cities").hide();
-			$("#cities").css("fill",$("#city-color").spectrum("get").toHexString());
-			$("#road-lines").css("stroke",$("#road-color").spectrum("get").toHexString());
-		}
-	});
-}
+// function loadOverlays(o)
+// {
+// 	$("#overlays").svg({
+// 		loadURL: "map/overlays.svg",
+// 		onLoad: function(){
+// 			$("#overlays svg").attr("width",756).attr("height",581);
+// 			if ( o == "cities" ) $("#roads").hide();
+// 			else $("#cities").hide();
+// 			$("#cities").css("fill",$("#city-color").spectrum("get").toHexString());
+// 			$("#road-lines").css("stroke",$("#road-color").spectrum("get").toHexString());
+// 		}
+// 	});
+// }
 // $(".learn-more, #how, #credits, #downloads").click(function(e){
 // 	e.stopPropagation();
 // 	var page;
@@ -538,31 +594,31 @@ $( "#export #tab" ).toggle(
 		$( "#export" ).animate( { "left" : "0px" } );
 	})
 
-function rgb2cmyk (r,g,b) {
-	var computedC = 0;
-	var computedM = 0;
-	var computedY = 0;
-	var computedK = 0;
+// function rgb2cmyk (r,g,b) {
+// 	var computedC = 0;
+// 	var computedM = 0;
+// 	var computedY = 0;
+// 	var computedK = 0;
 
-	// BLACK
-	if (r==0 && g==0 && b==0) {
-	computedK = 1;
-	return [0,0,0,100];
-	}
+// 	// BLACK
+// 	if (r==0 && g==0 && b==0) {
+// 	computedK = 1;
+// 	return [0,0,0,100];
+// 	}
 
-	computedC = 1 - (r/255);
-	computedM = 1 - (g/255);
-	computedY = 1 - (b/255);
+// 	computedC = 1 - (r/255);
+// 	computedM = 1 - (g/255);
+// 	computedY = 1 - (b/255);
 
-	var minCMY = Math.min(computedC,
-			  Math.min(computedM,computedY));
-	computedC = (computedC - minCMY) / (1 - minCMY) ;
-	computedM = (computedM - minCMY) / (1 - minCMY) ;
-	computedY = (computedY - minCMY) / (1 - minCMY) ;
-	computedK = minCMY;
+// 	var minCMY = Math.min(computedC,
+// 			  Math.min(computedM,computedY));
+// 	computedC = (computedC - minCMY) / (1 - minCMY) ;
+// 	computedM = (computedM - minCMY) / (1 - minCMY) ;
+// 	computedY = (computedY - minCMY) / (1 - minCMY) ;
+// 	computedK = minCMY;
 
-	return [Math.round(computedC*100),Math.round(computedM*100),Math.round(computedY*100),Math.round(computedK*100)];
-}
+// 	return [Math.round(computedC*100),Math.round(computedM*100),Math.round(computedY*100),Math.round(computedK*100)];
+// }
 function rgbToHex(r, g, b) {
     return "#" + ( (1 << 24) | (r << 16) | (g << 8) | b ).toString(16).slice(1);
 }
