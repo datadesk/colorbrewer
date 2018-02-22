@@ -167,7 +167,8 @@ function setSchemeType(type)
 				$( "#num-classes" ).val( 7 );
 				numClasses = 7;
 			}
-			$( "#num-classes option[name=8],#num-classes option[name=9],#num-classes option[name=10], #num-classes option[name=11], #num-classes option[name=12], #num-classes option[name=13], #num-classes option[name=14]" ).attr( "disabled", "disabled" );
+			$( "#num-classes option[name=8],#num-classes option[name=10],#num-classes option[name=12], #num-classes option[name=14]" ).css( "display", "none" );
+			$("#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).css( "display", "block" );			
 			break;
 		case "diverging":
 			if( $( "#num-classes" ).val() >= 15 )
@@ -175,7 +176,8 @@ function setSchemeType(type)
 				$( "#num-classes" ).val( 14 );
 				numClasses = 14;
 			}
-			$("#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).attr( "disabled", "disabled" );
+			$( "#num-classes option[name=8],#num-classes option[name=10],#num-classes option[name=12], #num-classes option[name=14]" ).css( "display", "block" );
+			$("#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).css( "display", "none" );
 			break;
 	}
 	showSchemes();
@@ -198,7 +200,7 @@ function showSchemes()
 		}));
 	}
 	if ( selectedSchemeType == "sequential" ){
-		$("#scheme1").css("width","160px");
+		$("#scheme1").css("width","calc(100% - 20px)");
 		$("#multi").show().text("Multi-hue:");
 		$("#scheme2").css("width","90px");
 		$("#single").show().text("Single hue:");
@@ -332,6 +334,16 @@ function applyColors()
 
 function drawColorChips()
 {
+
+	// if( numClasses = 14 ){
+	// 	var svgHeight = numClasses * 18;
+	// } 
+	// if ( numClasses = 12 ){
+	// 	var svgHeight = numClasses * 22;
+	// }
+	// if ( numClasses < 12) {
+	// 	var svgHeight = numClasses * 24;
+	// }
 	var svg = "<svg width='24' height='270'>";
 	for ( var i = 0; i < numClasses; i++ ){
 		svg += "<rect fill="+colorbrewer[selectedScheme][numClasses][i]+" width='24' height='"+Math.min(24,parseInt(265/numClasses))+"' y='"+i*Math.min(24,parseInt(265/numClasses))+"'/>";
@@ -355,12 +367,12 @@ function updateValues()
 	  }
 	}
 
-	var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
-	var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
-	var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
-	var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
-	var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
-	var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
+	// var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+	// var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+	// var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+	// var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+	// var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+	// var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
 
 	$("#color-chips rect").each(function(i){
 		var val = ( s == "cmyk" ? cmyk : getColorDisplay($(this).css("fill")) );
