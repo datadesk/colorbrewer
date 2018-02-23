@@ -191,6 +191,7 @@ option, label {
 #column2 {
 	width: calc(100% - 450px);
 	margin-left: 450px;
+	max-width: 756px;
 }
 #tools {
 	/*width: 450px;*/

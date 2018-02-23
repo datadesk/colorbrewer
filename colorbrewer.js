@@ -167,8 +167,8 @@ function setSchemeType(type)
 				$( "#num-classes" ).val( 7 );
 				numClasses = 7;
 			}
-			$( "#num-classes option[name=8],#num-classes option[name=10],#num-classes option[name=12], #num-classes option[name=14]" ).css( "display", "none" );
-			$("#num-classes option[name=1],#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).css( "display", "block" );			
+			$( "#num-classes option[name=1],#num-classes option[name=8],#num-classes option[name=10],#num-classes option[name=12], #num-classes option[name=14]" ).css( "display", "none" );
+			$("#num-classes option[name=3],#num-classes option[name=5],#num-classes option[name=7],#num-classes option[name=9],#num-classes option[name=11],#num-classes option[name=13]" ).css( "display", "block" );			
 			break;
 		case "diverging":
 			if( $( "#num-classes" ).val() >= 15 )
@@ -201,37 +201,43 @@ function showSchemes()
 	}
 	if ( selectedSchemeType == "sequential" ){
 		$("#scheme1").css("width","calc(100% - 20px)");
-		$("#multi").show().text("Multi-hue:");
-		$("#scheme2").css("width","90px");
-		$("#single").show().text("Single hue:");
+		//$("#multi").show().text("Multi-hue:");
+		//$("#scheme2").css("width","90px");
+		//$("#single").show().text("Single hue:");
 
-		$("#singlehue").empty().css("display","inline-block");
-		for ( i in schemeNames.singlehue){
-			if ( checkFilters(schemeNames.singlehue[i]) == false ) continue;
-			var ramp = $("<div class='ramp "+schemeNames.singlehue[i]+"'></div>"),
-				svg = "<svg width='15' height='75'>";
-			for ( var n = 0; n < 5; n++ ){
-				svg += "<rect fill="+colorbrewer[schemeNames.singlehue[i]][5][n]+" width='15' height='15' y='"+n*15+"'/>";
-			}
-			svg += "</svg>";
-			$("#singlehue").append(ramp.append(svg).click( function(){
-				if ( $(this).hasClass("selected") ) return;
-				setScheme( $(this).attr("class").substr(5) );
-			}));
-		}
+		// $("#singlehue").empty().css("display","inline-block");
+		// for ( i in schemeNames.singlehue){
+		// 	if ( checkFilters(schemeNames.singlehue[i]) == false ) continue;
+		// 	var ramp = $("<div class='ramp "+schemeNames.singlehue[i]+"'></div>"),
+		// 		svg = "<svg width='15' height='75'>";
+		// 	for ( var n = 0; n < 5; n++ ){
+		// 		svg += "<rect fill="+colorbrewer[schemeNames.singlehue[i]][5][n]+" width='15' height='15' y='"+n*15+"'/>";
+		// 	}
+		// 	svg += "</svg>";
+		// 	// $("#singlehue").append(ramp.append(svg).click( function(){
+		// 	// 	if ( $(this).hasClass("selected") ) return;
+		// 	// 	setScheme( $(this).attr("class").substr(5) );
+		// 	// }));
+		// }
 	} else {
 		$("#scheme1").css("width","100%");
-		$("#multi").hide();
-		$("#singlehue").empty();
-		$("#single").hide();
+		//$("#multi").hide();
+		//$("#singlehue").empty();
+		//$("#single").hide();
 	}
 
-	$(".score-icon").show();
+	//$(".score-icon").show();
 	$("#color-system").show();
 	if ( $(".ramp."+selectedScheme)[0] ){
 		setScheme( selectedScheme );
-	} else if ( $("#ramps").children().length ) setScheme( $("#ramps .ramp:first-child").attr("class").substr(5) );
-	else clearSchemes();
+	} else 
+	if ( $("#ramps").children().length ) setScheme( $("#ramps .ramp:first-child").attr("class").substr(5) );
+	//else clearSchemes();
+	else {
+		setNumClasses(2);
+		$("#num-classes").val(2);
+		
+	}
 }
 
 function clearSchemes()
@@ -598,13 +604,13 @@ function init()
 // 	$("#learnmore, #mask").hide();
 // });
 
-$( "#export #tab" ).toggle(
-	function(){
-		$( "#export" ).animate( { "left" : "265px" } );
-	},
-	function(){
-		$( "#export" ).animate( { "left" : "0px" } );
-	})
+// $( "#export #tab" ).toggle(
+// 	function(){
+// 		$( "#export" ).animate( { "left" : "265px" } );
+// 	},
+// 	function(){
+// 		$( "#export" ).animate( { "left" : "0px" } );
+// 	})
 
 // function rgb2cmyk (r,g,b) {
 // 	var computedC = 0;
