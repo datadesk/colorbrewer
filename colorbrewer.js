@@ -381,7 +381,7 @@ function updateValues()
 	// var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
 
 	$("#color-chips rect").each(function(i){
-		var val = ( s == "cmyk" ? cmyk : getColorDisplay($(this).css("fill")) );
+		var val = ( s == "cmyk" ? getCMYK(selectedScheme,numClasses,i) : getColorDisplay($(this).css("fill")) );
 		str += val + "\n";
 
 		var jsonVal = getColorDisplay($(this).css("fill"));
@@ -417,28 +417,28 @@ function getColorDisplay(c,s){
 	}
 
 }
-//function getCMYK( scheme, classes, n ){
-	//return cmyk[scheme][classes][n].toString();
-//}
-
-function getCMYK( ){
-	
-	function precise(x) {
-	  if ( x == 0 || x == 1 ){
-	  	return Number.parseFloat(x).toPrecision(1);
-	  } else {
-	  	return Number.parseFloat(x).toPrecision(3);
-	  }
-	}
-
-	var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
-	var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
-	var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
-	var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
-	var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
-	var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
-
+function getCMYK( scheme, classes, n ){
+	return cmyk[scheme][classes][n].toString();
 }
+
+// function getCMYK( ){
+	
+// 	function precise(x) {
+// 	  if ( x == 0 || x == 1 ){
+// 	  	return Number.parseFloat(x).toPrecision(1);
+// 	  } else {
+// 	  	return Number.parseFloat(x).toPrecision(3);
+// 	  }
+// 	}
+
+// 	var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+// 	var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+// 	var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+// 	var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+// 	var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+// 	var cmyk = "[" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"]";
+
+// }
 
 var highlight;
 $("#counties").svg({
@@ -466,18 +466,18 @@ $("#counties").svg({
 			  }
 			}
 
-			var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
-			var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
-			var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
-			var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
-			var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
+			// var cmyk = chroma( getColorDisplay(c,"hex") ).cmyk();
+			// var cmykC = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.c') );
+			// var cmykM = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.m') );
+			// var cmykY = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.y') );
+			// var cmykK = precise( chroma( getColorDisplay(c,"hex") ).get('cmyk.k') );
 
 			$("#probe").empty().append(
 				"<p>"+selectedScheme+" class " + cl +"<br/>"+
 				"RGB: " + getColorDisplay(c,"rgb")+"<br/>"+
-				//"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
+				"CMYK: " + getCMYK(selectedScheme,numClasses,cl-1)+"<br/>"+
 				
-				"CMYK: [" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"] <br/>"+
+				//"CMYK: [" + cmykC + "," + cmykM + "," + cmykY + "," + cmykK +"] <br/>"+
 
 				"HEX: " + getColorDisplay(c,"hex")+"</p>"
 			);
@@ -612,31 +612,31 @@ function init()
 // 		$( "#export" ).animate( { "left" : "0px" } );
 // 	})
 
-// function rgb2cmyk (r,g,b) {
-// 	var computedC = 0;
-// 	var computedM = 0;
-// 	var computedY = 0;
-// 	var computedK = 0;
+function rgb2cmyk (r,g,b) {
+	var computedC = 0;
+	var computedM = 0;
+	var computedY = 0;
+	var computedK = 0;
 
-// 	// BLACK
-// 	if (r==0 && g==0 && b==0) {
-// 	computedK = 1;
-// 	return [0,0,0,100];
-// 	}
+	// BLACK
+	if (r==0 && g==0 && b==0) {
+	computedK = 1;
+	return [0,0,0,100];
+	}
 
-// 	computedC = 1 - (r/255);
-// 	computedM = 1 - (g/255);
-// 	computedY = 1 - (b/255);
+	computedC = 1 - (r/255);
+	computedM = 1 - (g/255);
+	computedY = 1 - (b/255);
 
-// 	var minCMY = Math.min(computedC,
-// 			  Math.min(computedM,computedY));
-// 	computedC = (computedC - minCMY) / (1 - minCMY) ;
-// 	computedM = (computedM - minCMY) / (1 - minCMY) ;
-// 	computedY = (computedY - minCMY) / (1 - minCMY) ;
-// 	computedK = minCMY;
+	var minCMY = Math.min(computedC,
+			  Math.min(computedM,computedY));
+	computedC = (computedC - minCMY) / (1 - minCMY) ;
+	computedM = (computedM - minCMY) / (1 - minCMY) ;
+	computedY = (computedY - minCMY) / (1 - minCMY) ;
+	computedK = minCMY;
 
-// 	return [Math.round(computedC*100),Math.round(computedM*100),Math.round(computedY*100),Math.round(computedK*100)];
-// }
+	return [Math.round(computedC*100),Math.round(computedM*100),Math.round(computedY*100),Math.round(computedK*100)];
+}
 function rgbToHex(r, g, b) {
     return "#" + ( (1 << 24) | (r << 16) | (g << 8) | b ).toString(16).slice(1);
 }
