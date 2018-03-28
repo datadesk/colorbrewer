@@ -45,7 +45,7 @@ var schemeNames = {
 
 
 var visibleMap,
-	selectedScheme = "California_gold",
+	selectedScheme = "California-gold",
 	numClasses = 4;
 
 $("#num-classes").change(function(){
