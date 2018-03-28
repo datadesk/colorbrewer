@@ -475,7 +475,7 @@ $("#counties").svg({
 function init()
 {
 	var type = getParameterByName("type") || "sequential";
-	var scheme = getParameterByName("scheme") || "California_gold";
+	var scheme = getParameterByName("scheme") || "California-gold";
 	var n = getParameterByName("n") || 4;
 	$("#"+type).prop("checked",true);
 	$("#num-classes").val(n);
