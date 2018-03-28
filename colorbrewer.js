@@ -1,64 +1,40 @@
 var schemeNames = { 
-	sequential: ["California_gold",
-		"California_teal",
-		"FireAndIce_red",
-		"FireAndIce_gray",
-		"VanGogh_yellow",
-		"VanGogh_blue",
-		"GrapevineSunrise_green",
-		"GrapevineSunrise_purple",
-		"VanGoghPA_amber",
-		"VanGoghPA_purple",
-		"PeanutButterJelly_peanut",
-		"PeanutButterJelly_jelly",
-		"SapphireGold_gold",
-		"SapphireGold_sapphire",
-		"GoldenGreenBlue_green",
-		"GoldenGreenBlue_blue",
-		"CaliforniaSunset_bronze",
-		"CaliforniaSunset_teal",
-		"HeatContrast_warm",
-		"HeatContrast_cool",
-		"BrightHeatContrast_warm",
-		"BrightHeatContrast_cool",
-		"FallFestival_orange",
-		"FallFestival_green"
-		],
-	singlehue:
-		["California_gold",
-		"California_teal",
-		"FireAndIce_red",
-		"FireAndIce_gray",
-		"VanGogh_yellow",
-		"VanGogh_blue",
-		"GrapevineSunrise_green",
-		"GrapevineSunrise_purple",
-		"VanGoghPA_amber",
-		"VanGoghPA_purple",
-		"PeanutButterJelly_peanut",
-		"PeanutButterJelly_jelly",
-		"SapphireGold_gold",
-		"SapphireGold_sapphire",
-		"GoldenGreenBlue_green",
-		"GoldenGreenBlue_blue",
-		"CaliforniaSunset_bronze",
-		"CaliforniaSunset_teal",
-		"HeatContrast_warm",
-		"HeatContrast_cool",
-		"BrightHeatContrast_warm",
-		"BrightHeatContrast_cool",
-		"FallFestival_orange",
-		"FallFestival_green"
+	sequential: [
+		"California-gold",
+		"California-teal",
+		"FireAndIce-red",
+		"FireAndIce-gray",
+		"VanGogh-yellow",
+		"VanGogh-blue",
+		"GrapevineSunrise-green",
+		"GrapevineSunrise-purple",
+		"VanGoghAmberAndPurple-amber",
+		"VanGoghAmberAndPurple-purple",
+		"PeanutButterAndJelly-peanut",
+		"PeanutButterAndJelly-jelly",
+		"SapphireAndGold-gold",
+		"SapphireAndGold-sapphire",
+		"GoldenGreenAndBlue-green",
+		"GoldenGreenAndBlue-blue",
+		"CaliforniaSunset-bronze",
+		"CaliforniaSunset-teal",
+		"HeatContrast-warm",
+		"HeatContrast-cool",
+		"BrightHeatContrast-warm",
+		"BrightHeatContrast-cool",
+		"FallFestival-orange",
+		"FallFestival-green"
 		],
 	diverging: 
-		["California",
+		[
+		"California",
 		"FireAndIce",
-		"VanGoghYB",
+		"VanGoghYellowAndBlue",
 		"GrapevineSunrise",
-		"VanGoghPA",
-		"PeanutButterJelly",
-		"SapphireGold",
-		"GoldenGreenBlue",
+		"VanGoghPurpleAndAmber",
+		"PeanutButterAndJelly",
+		"SapphireAndGold",
+		"GoldenGreenAndBlue",
 		"CaliforniaSunset",
 		"HeatContrast",
 		"BrightHeatContrast",
@@ -242,6 +218,9 @@ function showSchemes()
 
 function clearSchemes()
 {
+
+	var type = getParameterByName("type") || "sequential";
+
 	$("#counties g path").css("fill","#ccc");
 	$("#color-chips").empty();
 	$("#color-values").empty();
@@ -253,7 +232,8 @@ function clearSchemes()
 }
 
 function setScheme(s)
-{
+{	
+
 	$("#county-map g").removeClass(selectedScheme).addClass(s);
 	$(".ramp.selected").removeClass("selected");
 	selectedScheme = s;
